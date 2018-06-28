@@ -3,19 +3,23 @@
   "version": "0.0.3",
   "private": true,
   "devDependencies": {
-    "concurrently": "3.5.1",
-    "react-scripts": "^1.1.4"
+    "@bahmutov/add-typescript-to-cypress": "^2.1.2",
+    "concurrently": "4.1.0",
+    "cypress": "^4.10.0",
+    "react-scripts": "3.4.1",
+    "typescript": "^3.7.5"
   },
   "dependencies": {
     "autoprefixer-stylus": "0.14.0",
-    "firebase": "^4.10.1",
+    "firebase": "^7.6.0",
     "prop-types": "^15.6.0",
-    "re-base": "3.2.2",
-    "react": "^16.3.0-alpha.1",
-    "react-dom": "^16.3.0-alpha.1",
+    "prettier": "^1.19.1",
+    "re-base": "4.0.0",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
     "react-router-dom": "^4.2.2",
     "react-transition-group": "^2.2.1",
-    "serve": "^6.5.8",
+    "serve": "^10.1.2",
     "stylus": "0.54.5"
   },
   "scripts": {
@@ -24,6 +28,20 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "styles": "stylus -u autoprefixer-stylus ./src/css/style.styl -o ./src/css/style.css",
-    "styles:watch": "stylus -u autoprefixer-stylus -w ./src/css/style.styl -o ./src/css/style.css"
+    "styles:watch": "stylus -u autoprefixer-stylus -w ./src/css/style.styl -o ./src/css/style.css",
+    "cypress": "cypress open",
+    "cypress:run": "cypress run"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
