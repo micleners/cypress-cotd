@@ -87,87 +87,168 @@ describe('Adding/removing fish', () => {
           .click();
       });
 
-      it('should on button click', () => {
-        cy.get('div.fish-edit').should('have.length', 9);
-      });
+      // Are these tests necessary? Do they add benefit?
+      describe('form', () => {
+        it('should have correct number of fish forms', () => {
+          cy.get('div.fish-edit').should('have.length', 9);
+        });
 
-      it('should have the correct fish names', () => {
-        const fishName = [
-          'Pacific Halibut',
-          'Lobster',
-          'Sea Scallops',
-          'Mahi Mahi',
-          'King Crab',
-          'Atlantic Salmon',
-          'Oysters',
-          'Mussels',
-          'Jumbo Prawns',
-        ];
-        cy.get('div.fish-edit input[name="name"]').each((fish, index) => {
-          expect(fish.val()?.toString()).to.equal(fishName[index]);
+        it('should have the correct fish names', () => {
+          const fishName = [
+            'Pacific Halibut',
+            'Lobster',
+            'Sea Scallops',
+            'Mahi Mahi',
+            'King Crab',
+            'Atlantic Salmon',
+            'Oysters',
+            'Mussels',
+            'Jumbo Prawns',
+          ];
+          cy.get('div.fish-edit input[name="name"]').each((fish, index) => {
+            expect(fish.val()?.toString()).to.equal(fishName[index]);
+          });
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        // Hint: is the query selector for the element correct?
+        it('FAILING: should have the correct fish prices', () => {
+          const fishPrices = [
+            '1724',
+            '3200',
+            '1129',
+            '4234',
+            '1684',
+            '1453',
+            '2543',
+            '425',
+            '2250',
+          ];
+          // fix code in next line
+          cy.get('div.fish-edit input[name="name"]').each((fish, index) => {
+            expect(fish.val()?.toString()).to.equal(fishPrices[index]);
+          });
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        it('FAILING: should have the correct description for the fish', () => {
+          const fishStatuses = [
+            'available',
+            'available',
+            'unavailable',
+            'available',
+            'available',
+            'available',
+            'available',
+            'available',
+            'available',
+          ];
+          // delete the next line and add missing code here to test these values
+          expect(true).to.be.false;
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        it('FAILING: should have the correct description for the fish', () => {
+          const fishDescriptions = [
+            'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
+            'Big, sweet and tender. True dry-pack scallops from the icy waters of Alaska. About 8-10 per pound',
+            'Crack these open and enjoy them plain or with one of our cocktail sauces',
+            'This flaky, oily salmon is truly the king of the sea. Bake it, grill it, broil it...as good as it gets!',
+            'A soft plump oyster with a sweet salty flavor and a clean finish.',
+            'The best mussels from the Pacific Northwest with a full-flavored and complex taste.',
+            'With 21-25 two bite prawns in each pound, these sweet morsels are perfect for shish-kabobs.',
+          ];
+          // delete the next line and add missing code here to test these values
+          expect(true).to.be.false;
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        it('FAILING: should have the correct fish images', () => {
+          const fishImages = [];
+          // delete the next line and add missing code here to test these values
+          expect(true).to.be.false;
         });
       });
 
-      // TODO: Fix test and remove "FAILING" flag
-      // Hint: is the query selector for the element correct?
-      it('FAILING: should have the correct fish prices', () => {
-        const fishPrices = [
-          '1724',
-          '3200',
-          '1129',
-          '4234',
-          '1684',
-          '1453',
-          '2543',
-          '425',
-          '2250',
-        ];
-        // fix code in next line
-        cy.get('div.fish-edit input[name="name"]').each((fish, index) => {
-          expect(fish.val()?.toString()).to.equal(fishPrices[index]);
+      describe.skip('market menu', () => {
+        it('should have the correct number of fish displayed', () => {
+          cy.get('div.menu-fish').should('have.length', 9);
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        it('FAILING: should have the correct fish names', () => {
+          const fishName = [
+            'Pacific Halibut',
+            'Lobster',
+            'Sea Scallops',
+            'Mahi Mahi',
+            'King Crab',
+            'Atlantic Salmon',
+            'Oysters',
+            'Mussels',
+            'Jumbo Prawns',
+          ];
+          // why isn't this working? Is there an alternative to `to.equal`?
+          cy.get('h3.fish-name').each((fish, index) => {
+            expect(fish.text()).to.equal(fishName[index]);
+          });
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        // Hint: How is the price calculated from supplied JSON?
+        it('FAILING: should have the correct fish prices', () => {
+          const fishPrices = [
+            '1724',
+            '3200',
+            '1129',
+            '4234',
+            '1684',
+            '1453',
+            '2543',
+            '425',
+            '2250',
+          ];
+          // fix code in next line
+          cy.get('h3.fish-name span').each((fish, index) => {
+            expect(fish.text()).to.equal(fishPrices[index]);
+          });
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        it('FAILING: should have the correct description for the fish', () => {
+          const fishDescriptions = [
+            'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
+            'Big, sweet and tender. True dry-pack scallops from the icy waters of Alaska. About 8-10 per pound',
+            'Crack these open and enjoy them plain or with one of our cocktail sauces',
+            'This flaky, oily salmon is truly the king of the sea. Bake it, grill it, broil it...as good as it gets!',
+            'A soft plump oyster with a sweet salty flavor and a clean finish.',
+            'The best mussels from the Pacific Northwest with a full-flavored and complex taste.',
+            'With 21-25 two bite prawns in each pound, these sweet morsels are perfect for shish-kabobs.',
+          ];
+          // delete the next line and add missing code here to test these values
+          expect(true).to.be.false;
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        it('FAILING: should have the correct fish images', () => {
+          const fishImages = [];
+          // delete the next line and add missing code here to test these values
+          expect(true).to.be.false;
+        });
+
+        // TODO: Fix test and remove "FAILING" flag
+        it('FAILING: should have the correct description for the fish', () => {
+          // delete the next line and add missing code
+          expect(true).to.be.false;
         });
       });
+    });
 
-      // TODO: Fix test and remove "FAILING" flag
-      it('FAILING: should have the correct fish images', () => {
-        const fishImages = [
-          '/images/hali.jpg',
-          '/images/lobster.jpg',
-          '/images/scallops.jpg',
-          '/images/mahi.jpg',
-          '/images/crab.jpg',
-          '/images/salmon.jpg',
-          '/images/oysters.jpg',
-          '/images/mussels.jpg',
-          '/images/prawns.jpg',
-        ];
-        cy.pause()
-        // delete the next line and add missing code here to test these values
-        expect(true).to.be.false;
-      });
-
-      // TODO: Fix test and remove "FAILING" flag
-      it('FAILING: should have the correct description for the fish', () => {
-        const fishDescriptions = [
-          'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
-          'Big, sweet and tender. True dry-pack scallops from the icy waters of Alaska. About 8-10 per pound',
-          'Crack these open and enjoy them plain or with one of our cocktail sauces',
-          'This flaky, oily salmon is truly the king of the sea. Bake it, grill it, broil it...as good as it gets!',
-          'A soft plump oyster with a sweet salty flavor and a clean finish.',
-          'The best mussels from the Pacific Northwest with a full-flavored and complex taste.',
-          'With 21-25 two bite prawns in each pound, these sweet morsels are perfect for shish-kabobs.',
-        ];
-        // delete the next line and add missing code here to test these values
-        expect(true).to.be.false;
-      });
-
-      // TODO: Fix test and remove "FAILING" flag
-      it('FAILING: should have the correct description for the fish', () => {
-        // TODO: Add this line
-        const fishStatuses = [];
-        // delete the next line and add missing code here to test these values
-        expect(true).to.be.false;
-      });
+    describe.skip('adding fish to order', () => {
+      it('can add fish by clicking add to order', () => {});
+      it('can add multiple fishes of multiple types', () => {});
+      it('can remove fishes after adding', () => {});
+      it('calculates total price corrects', () => {});
     });
   });
 });
