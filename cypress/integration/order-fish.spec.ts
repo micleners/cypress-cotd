@@ -3,9 +3,9 @@ describe('Adding/removing fish', () => {
   // const url = `${Cypress.env("webUrl")}`;
   // TODO: define URL variables in cypress.json
 
-  // const url = 'http://localhost:3000';
+  const url = 'http://localhost:3000';
   // uncomment line above and comment out line below to run tests locally. (Don't forget to `npm run start`)
-  const url = `https://cypress-cotd.micleners.com`;
+  // const url = `https://cypress-cotd.micleners.com`;
 
   describe('Navigate to COTD homepage and create store', () => {
     // beforeEach will before every test. Here we visit the homepage
@@ -47,12 +47,23 @@ describe('Adding/removing fish', () => {
         cy.get('div.fish-edit input[name="name"]')
           .first()
           .should('contain.value', 'Southwest Trout');
-
-        // TODO: finishing asserting the rest of the fields
+        cy.get('div.fish-edit input[name="price"]')
+          .first()
+          .should('contain.value', '1050');
+        cy.get('div.fish-edit textarea[name="desc"]')
+          .first()
+          .should(
+            'contain.value',
+            "Not the best, but not the worst you'll ever have!"
+          );
+        cy.get('div.fish-edit input[name="image"]')
+          .first()
+          .should('contain.value', '/images/salmon.jpg');
       });
 
       // TODO: Fix test and remove "FAILING" flag
-      it('FAILING: can add fish and see fish on left hand menu', () => {
+      it.only('FAILING: can add fish and see fish on left hand menu', () => {
+        // cy.viewport(1600, 1000);
         cy.get('form.fish-edit').as('fishForm');
         cy.get('@fishForm').should('exist');
         cy.get('@fishForm')
@@ -74,7 +85,16 @@ describe('Adding/removing fish', () => {
         // TODO: fix this next assertion
         cy.get('h3.fish-name')
           .first()
-          .should('contain', 'Halibut');
+          .should('contain', 'Southwest Trout');
+        cy.get('h3.fish-name')
+          .first()
+          .should('contain', '$10.50');
+        cy.get('p.fish-description')
+          .first()
+          .should(
+            'contain',
+            "Not the best, but not the worst you'll ever have!"
+          );
 
         // TODO: finishing asserting the rest of the display values
       });
@@ -164,7 +184,18 @@ describe('Adding/removing fish', () => {
 
         // TODO: Fix test and remove "FAILING" flag
         it('FAILING: should have the correct fish images', () => {
-          const fishImages = [];
+          const fishImages = [
+            '/images/hali.jpg',
+            '/images/lobster.jpg',
+            '/images/scallops.jpg',
+            '/images/mahi.jpg',
+            '/images/crab.jpg',
+            '/images/salmon.jpg',
+            '/images/oysters.jpg',
+            '/images/mussels.jpg',
+            '/images/prawns.jpg',
+          ];
+          cy.pause();
           // delete the next line and add missing code here to test these values
           expect(true).to.be.false;
         });
