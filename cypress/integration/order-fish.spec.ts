@@ -48,8 +48,7 @@ describe('Adding/removing fish', () => {
           .first()
           .should('contain.value', 'Southwest Trout');
 
-        // TODO: Fix test and remove "FAILING" flag
-        // finishing asserting the rest of the fields
+        // TODO: finishing asserting the rest of the fields
       });
 
       // TODO: Fix test and remove "FAILING" flag
