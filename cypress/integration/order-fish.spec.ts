@@ -63,7 +63,7 @@ describe('Adding/removing fish', () => {
           .type('1050');
         cy.get('@fishForm')
           .find('textarea[name="desc"]')
-          .type('1050');
+          .type("Not the best, but not the worst you'll ever have!");
         cy.get('@fishForm')
           .find('input[name="image"]')
           .type('/images/salmon.jpg');
