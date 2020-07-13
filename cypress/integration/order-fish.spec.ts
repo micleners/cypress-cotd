@@ -155,6 +155,8 @@ describe('Adding/removing fish', () => {
           const fishStatuses = [
             'available',
             'available',
+            // note: there is a bug in the app here!
+            // Feel free to try and fix it or .skip this test permanently :)
             'unavailable',
             'available',
             'available',
@@ -278,7 +280,10 @@ describe('Adding/removing fish', () => {
     describe.skip('adding fish to order', () => {
       it('can add fish by clicking add to order', () => {});
       it('can add multiple fishes of multiple types', () => {});
-      it('can remove fishes after adding', () => {});
+      it('can remove fishes after adding', () => {
+        // note: there is a bug in the app here!
+        // Feel free to try and fix it or .skip this test permanently :)
+      });
       it('calculates total price corrects', () => {});
     });
   });
