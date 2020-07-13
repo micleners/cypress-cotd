@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class EditFishForm extends React.Component {
   static propTypes = {
@@ -8,16 +8,16 @@ class EditFishForm extends React.Component {
       name: PropTypes.string,
       desc: PropTypes.string,
       status: PropTypes.string,
-      price: PropTypes.number
+      price: PropTypes.number,
     }),
     index: PropTypes.string,
-    updateFish: PropTypes.func
+    updateFish: PropTypes.func,
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const updatedFish = {
       ...this.props.fish,
-      [event.currentTarget.name]: event.currentTarget.value
+      [event.currentTarget.name]: event.currentTarget.value,
     };
     this.props.updateFish(this.props.index, updatedFish);
   };
@@ -37,7 +37,12 @@ class EditFishForm extends React.Component {
           onChange={this.handleChange}
           value={this.props.fish.price}
         />
-        <select name="status" onChange={this.handleChange}>
+        <select
+          name="status"
+          onChange={this.handleChange}
+          value={this.props.fish.status}
+          data-value={this.props.fish.status}
+        >
           <option value="available">available</option>
           <option value="unavailable">unavailable</option>
         </select>

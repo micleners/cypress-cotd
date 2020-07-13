@@ -1,11 +1,7 @@
 describe('Adding/removing fish', () => {
-  // const url = `${Cypress.env('localUrl')}`;
+  const url = `${Cypress.env('localUrl')}`;
+  // switch comment between line above and line below to run tests on web vs locally. (Don't forget to `npm run start`)
   // const url = `${Cypress.env("webUrl")}`;
-  // TODO: define URL variables in cypress.json
-
-  const url = 'http://localhost:3000';
-  // uncomment line above and comment out line below to run tests locally. (Don't forget to `npm run start`)
-  // const url = `https://cypress-cotd.micleners.com`;
 
   describe('Navigate to COTD homepage and create store', () => {
     // beforeEach will before every test. Here we visit the homepage
@@ -61,9 +57,7 @@ describe('Adding/removing fish', () => {
           .should('contain.value', '/images/salmon.jpg');
       });
 
-      // TODO: Fix test and remove "FAILING" flag
-      it.only('FAILING: can add fish and see fish on left hand menu', () => {
-        // cy.viewport(1600, 1000);
+      it('can add fish and see fish on left hand menu', () => {
         cy.get('form.fish-edit').as('fishForm');
         cy.get('@fishForm').should('exist');
         cy.get('@fishForm')
@@ -82,7 +76,6 @@ describe('Adding/removing fish', () => {
           .contains('Add Fish!')
           .click();
 
-        // TODO: fix this next assertion
         cy.get('h3.fish-name')
           .first()
           .should('contain', 'Southwest Trout');
@@ -95,8 +88,11 @@ describe('Adding/removing fish', () => {
             'contain',
             "Not the best, but not the worst you'll ever have!"
           );
-
-        // TODO: finishing asserting the rest of the display values
+        cy.get('img[alt="Southwest Trout"]').should(
+          'have.attr',
+          'src',
+          '/images/salmon.jpg'
+        );
       });
     });
 
@@ -130,33 +126,27 @@ describe('Adding/removing fish', () => {
           });
         });
 
-        // TODO: Fix test and remove "FAILING" flag
-        // Hint: is the query selector for the element correct?
-        it('FAILING: should have the correct fish prices', () => {
+        it('should have the correct fish prices', () => {
           const fishPrices = [
             '1724',
             '3200',
+            '1684',
             '1129',
             '4234',
-            '1684',
             '1453',
             '2543',
             '425',
             '2250',
           ];
-          // fix code in next line
-          cy.get('div.fish-edit input[name="name"]').each((fish, index) => {
+          cy.get('div.fish-edit input[name="price"]').each((fish, index) => {
             expect(fish.val()?.toString()).to.equal(fishPrices[index]);
           });
         });
 
-        // TODO: Fix test and remove "FAILING" flag
-        it('FAILING: should have the correct description for the fish', () => {
+        it('should have the correct description for the fish', () => {
           const fishStatuses = [
             'available',
             'available',
-            // note: there is a bug in the app here!
-            // Feel free to try and fix it or .skip this test permanently :)
             'unavailable',
             'available',
             'available',
@@ -165,12 +155,12 @@ describe('Adding/removing fish', () => {
             'available',
             'available',
           ];
-          // delete the next line and add missing code here to test these values
-          expect(true).to.be.false;
+          cy.get('div.fish-edit select[name="status"]').each((fish, index) => {
+            expect(fish.attr('data-value')).to.equal(fishStatuses[index]);
+          });
         });
 
-        // TODO: Fix test and remove "FAILING" flag
-        it('FAILING: should have the correct description for the fish', () => {
+        it('should have the correct description for the fish', () => {
           const fishDescriptions = [
             'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
             'Big, sweet and tender. True dry-pack scallops from the icy waters of Alaska. About 8-10 per pound',
@@ -180,12 +170,12 @@ describe('Adding/removing fish', () => {
             'The best mussels from the Pacific Northwest with a full-flavored and complex taste.',
             'With 21-25 two bite prawns in each pound, these sweet morsels are perfect for shish-kabobs.',
           ];
-          // delete the next line and add missing code here to test these values
-          expect(true).to.be.false;
+          cy.get('div.fish-edit textarea[name="desc"]').each((fish, index) => {
+            expect(fish.val()?.toString()).to.equal(fishDescriptions[index]);
+          });
         });
 
-        // TODO: Fix test and remove "FAILING" flag
-        it('FAILING: should have the correct fish images', () => {
+        it('should have the correct fish images', () => {
           const fishImages = [
             '/images/hali.jpg',
             '/images/lobster.jpg',
@@ -197,19 +187,19 @@ describe('Adding/removing fish', () => {
             '/images/mussels.jpg',
             '/images/prawns.jpg',
           ];
-          cy.pause();
-          // delete the next line and add missing code here to test these values
-          expect(true).to.be.false;
+          cy.get('div.fish-edit input[name="image"]').each((fish, index) => {
+            expect(fish.val()?.toString()).to.equal(fishImages[index]);
+          });
         });
       });
 
-      describe.skip('market menu', () => {
+      describe('market menu', () => {
+        // Easter egg! This test was failing, too :'D
         it('should have the correct number of fish displayed', () => {
-          cy.get('div.menu-fish').should('have.length', 9);
+          cy.get('li.menu-fish').should('have.length', 9);
         });
 
-        // TODO: Fix test and remove "FAILING" flag
-        it('FAILING: should have the correct fish names', () => {
+        it('should have the correct fish names', () => {
           const fishName = [
             'Pacific Halibut',
             'Lobster',
@@ -223,32 +213,34 @@ describe('Adding/removing fish', () => {
           ];
           // why isn't this working? Is there an alternative to `to.equal`?
           cy.get('h3.fish-name').each((fish, index) => {
-            expect(fish.text()).to.equal(fishName[index]);
+            expect(fish.text()).to.contain(fishName[index]);
           });
         });
 
-        // TODO: Fix test and remove "FAILING" flag
-        // Hint: How is the price calculated from supplied JSON?
-        it('FAILING: should have the correct fish prices', () => {
+        it('should have the correct fish prices', () => {
           const fishPrices = [
             '1724',
             '3200',
+            '1684',
             '1129',
             '4234',
-            '1684',
             '1453',
             '2543',
             '425',
             '2250',
           ];
-          // fix code in next line
           cy.get('h3.fish-name span').each((fish, index) => {
-            expect(fish.text()).to.equal(fishPrices[index]);
+            expect(fish.text()).to.equal(
+              (parseInt(fishPrices[index]) / 100).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              })
+            );
           });
         });
 
         // TODO: Fix test and remove "FAILING" flag
-        it('FAILING: should have the correct description for the fish', () => {
+        it.only('FAILING: should have the correct description for the fish', () => {
           const fishDescriptions = [
             'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
             'Big, sweet and tender. True dry-pack scallops from the icy waters of Alaska. About 8-10 per pound',
