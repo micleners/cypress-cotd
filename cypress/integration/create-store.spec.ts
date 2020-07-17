@@ -1,4 +1,4 @@
-describe("Home page and creating a store", () => {
+describe.skip("Home page and creating a store", () => {
   // TODO: define URL variables in cypress.json
   // const localUrl = `${Cypress.env("localUrl")}`;
   // const webUrl = `${Cypress.env("webUrl")}`;

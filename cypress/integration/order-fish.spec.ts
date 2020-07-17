@@ -1,4 +1,4 @@
-describe('Adding/removing fish', () => {
+describe.skip('Adding/removing fish', () => {
   // const url = `${Cypress.env('localUrl')}`;
   // const url = `${Cypress.env("webUrl")}`;
   // TODO: define URL variables in cypress.json
