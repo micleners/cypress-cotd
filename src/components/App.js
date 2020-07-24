@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
-import sampleFishes from '../sample-fishes';
 import Fish from './Fish';
+
+const baseUrl = 'http://localhost:8080/api/fish/';
+let timeout = null;
 
 class App extends React.Component {
   state = {
@@ -32,27 +34,72 @@ class App extends React.Component {
   }
 
   addFish = (fish) => {
-    const fishes = { ...this.state.fishes };
-    fishes[`fish${Date.now()}`] = fish;
-    this.setState({
-      fishes,
+    const baseUrl = '';
+    fetch(baseUrl, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(fish),
+    }).then(() => {
+      fetch(baseUrl)
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          this.setState({ fishes: res });
+        });
     });
   };
 
   updateFish = (key, updatedFish) => {
-    const fishes = { ...this.state.fishes };
-    fishes[key] = updatedFish;
-    this.setState({ fishes });
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fetch(`${baseUrl}${key}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedFish),
+      }).then(() => {
+        fetch(baseUrl)
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            this.setState({ fishes: res });
+          });
+      });
+    }, 500);
   };
 
   deleteFish = (key) => {
-    const fishes = { ...this.state.fishes };
-    fishes[key] = null;
-    this.setState({ fishes });
+    fetch(`${baseUrl}${key}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(() => {
+      fetch(baseUrl)
+        .then((res) => {
+          return res.json();
+        })
+        .then((res) => {
+          this.setState({ fishes: res });
+        });
+    });
   };
 
   loadSampleFishes = () => {
-    this.setState({ fishes: sampleFishes });
+    fetch(baseUrl)
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => this.setState({ fishes: res }));
   };
 
   addToOrder = (key) => {
