@@ -55,6 +55,8 @@ class App extends React.Component {
   };
 
   updateFish = (key, updatedFish) => {
+    const newFishes = (this.state.fishes[key] = updatedFish);
+    this.setState({ fished: newFishes });
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       fetch(`${baseUrl}${key}`, {
