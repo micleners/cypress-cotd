@@ -8,7 +8,7 @@ class EditFishForm extends React.Component {
       name: PropTypes.string,
       desc: PropTypes.string,
       status: PropTypes.string,
-      price: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+      price: PropTypes.number,
     }),
     index: PropTypes.string,
     updateFish: PropTypes.func,
