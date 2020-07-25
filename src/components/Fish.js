@@ -9,7 +9,7 @@ class Fish extends React.Component {
       name: PropTypes.string,
       desc: PropTypes.string,
       status: PropTypes.string,
-      price: PropTypes.oneOfType(PropTypes.string, PropTypes.number),
+      price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     }),
     addToOrder: PropTypes.func,
   };
