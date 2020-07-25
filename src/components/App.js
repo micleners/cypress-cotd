@@ -34,7 +34,6 @@ class App extends React.Component {
   }
 
   addFish = (fish) => {
-    const baseUrl = '';
     fetch(baseUrl, {
       method: 'POST',
       mode: 'cors',
