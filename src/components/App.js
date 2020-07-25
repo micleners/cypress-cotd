@@ -55,7 +55,8 @@ class App extends React.Component {
   };
 
   updateFish = (key, updatedFish) => {
-    const newFishes = (this.state.fishes[key] = updatedFish);
+    const newFishes = this.state.fishes;
+    newFishes[key] = updatedFish;
     this.setState({ fished: newFishes });
     clearTimeout(timeout);
     timeout = setTimeout(() => {
