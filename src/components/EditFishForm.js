@@ -37,7 +37,12 @@ class EditFishForm extends React.Component {
           onChange={this.handleChange}
           value={this.props.fish.price}
         />
-        <select name="status" onChange={this.handleChange}>
+        <select
+          name="status"
+          onChange={this.handleChange}
+          value={this.props.fish.status}
+          data-value={this.props.fish.status}
+        >
           <option value="available">available</option>
           <option value="unavailable">unavailable</option>
         </select>
