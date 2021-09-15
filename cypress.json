@@ -1,1 +1,7 @@
-{}
+{
+    "env": {
+      "localUrl": "http://localhost:3000",
+      "webUrl": "https://cypress-cotd.micleners.com"
+    },
+    "experimentalFetchPolyfill": true
+  }
