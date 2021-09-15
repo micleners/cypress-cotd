@@ -110,7 +110,7 @@ describe('Adding/removing fish', () => {
         });
 
         it('should have the correct fish names', () => {
-          const fishName = [
+          const fishNames = [
             'Pacific Halibut',
             'Lobster',
             'Sea Scallops',
@@ -121,8 +121,8 @@ describe('Adding/removing fish', () => {
             'Mussels',
             'Jumbo Prawns',
           ];
-          cy.get('div.fish-edit input[name="name"]').each((fish, index) => {
-            expect(fish.val()?.toString()).to.equal(fishName[index]);
+          cy.get('div.fish-edit input[name="name"]').each((fishName, index) => {
+            cy.wrap(fishName).should('have.value', fishNames[index])
           });
         });
 
@@ -138,8 +138,8 @@ describe('Adding/removing fish', () => {
             '425',
             '2250',
           ];
-          cy.get('div.fish-edit input[name="price"]').each((fish, index) => {
-            expect(fish.val()?.toString()).to.equal(fishPrices[index]);
+          cy.get('div.fish-edit input[name="price"]').each((fishPrice, index) => {
+            cy.wrap(fishPrice).should('have.value', fishPrices[index])
           });
         });
 
@@ -147,7 +147,7 @@ describe('Adding/removing fish', () => {
           const fishStatuses = [
             'available',
             'available',
-            'unavailable',
+            'available',
             'available',
             'available',
             'available',
@@ -156,14 +156,16 @@ describe('Adding/removing fish', () => {
             'available',
           ];
           cy.get('div.fish-edit select[name="status"]').each((fish, index) => {
-            expect(fish.attr('data-value')).to.equal(fishStatuses[index]);
+            cy.wrap(fish).find("option:selected").contains(fishStatuses[index])
           });
         });
 
         it('should have the correct description for the fish', () => {
           const fishDescriptions = [
+            'Everyones favorite white fish. We will cut it to the size you need and ship it.',
             'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
             'Big, sweet and tender. True dry-pack scallops from the icy waters of Alaska. About 8-10 per pound',
+            'Lean flesh with a mild, sweet flavor profile, moderately firm texture and large, moist flakes.',
             'Crack these open and enjoy them plain or with one of our cocktail sauces',
             'This flaky, oily salmon is truly the king of the sea. Bake it, grill it, broil it...as good as it gets!',
             'A soft plump oyster with a sweet salty flavor and a clean finish.',
@@ -171,7 +173,7 @@ describe('Adding/removing fish', () => {
             'With 21-25 two bite prawns in each pound, these sweet morsels are perfect for shish-kabobs.',
           ];
           cy.get('div.fish-edit textarea[name="desc"]').each((fish, index) => {
-            expect(fish.val()?.toString()).to.equal(fishDescriptions[index]);
+            cy.wrap(fish).contains(fishDescriptions[index])
           });
         });
 
@@ -188,7 +190,7 @@ describe('Adding/removing fish', () => {
             '/images/prawns.jpg',
           ];
           cy.get('div.fish-edit input[name="image"]').each((fish, index) => {
-            expect(fish.val()?.toString()).to.equal(fishImages[index]);
+            cy.wrap(fish).should('have.value', fishImages[index])
           });
         });
       });
