@@ -143,7 +143,7 @@ describe('Adding/removing fish', () => {
           });
         });
 
-        it('should have the correct description for the fish', () => {
+        it('should have the correct availability for the fish', () => {
           const fishStatuses = [
             'available',
             'available',
@@ -189,20 +189,19 @@ describe('Adding/removing fish', () => {
             '/images/mussels.jpg',
             '/images/prawns.jpg',
           ];
-          cy.get('div.fish-edit input[name="image"]').each((fish, index) => {
-            cy.wrap(fish).should('have.value', fishImages[index])
+          cy.get('div.fish-edit input[name="image"]').each((fishImage, index) => {
+            cy.wrap(fishImage).should('have.value', fishImages[index])
           });
         });
       });
 
-      describe.skip('market menu', () => {
-        // Easter egg! This test was failing, too :'D
+      describe('market menu', () => {
         it('should have the correct number of fish displayed', () => {
           cy.get('li.menu-fish').should('have.length', 9);
         });
 
         it('should have the correct fish names', () => {
-          const fishName = [
+          const fishNames = [
             'Pacific Halibut',
             'Lobster',
             'Sea Scallops',
@@ -213,9 +212,8 @@ describe('Adding/removing fish', () => {
             'Mussels',
             'Jumbo Prawns',
           ];
-          // why isn't this working? Is there an alternative to `to.equal`?
-          cy.get('h3.fish-name').each((fish, index) => {
-            expect(fish.text()).to.contain(fishName[index]);
+          cy.get('h3.fish-name').each((fishName, index) => {
+            cy.wrap(fishName).contains(fishNames[index]);
           });
         });
 
@@ -241,32 +239,38 @@ describe('Adding/removing fish', () => {
           });
         });
 
-        // TODO: Fix test and remove "FAILING" flag
-        it('FAILING: should have the correct description for the fish', () => {
+        it('should have the correct description for the fish', () => {
           const fishDescriptions = [
+            'Everyones favorite white fish. We will cut it to the size you need and ship it.',
             'These tender, mouth-watering beauties are a fantastic hit at any dinner party.',
             'Big, sweet and tender. True dry-pack scallops from the icy waters of Alaska. About 8-10 per pound',
+            'Lean flesh with a mild, sweet flavor profile, moderately firm texture and large, moist flakes.',
             'Crack these open and enjoy them plain or with one of our cocktail sauces',
             'This flaky, oily salmon is truly the king of the sea. Bake it, grill it, broil it...as good as it gets!',
             'A soft plump oyster with a sweet salty flavor and a clean finish.',
             'The best mussels from the Pacific Northwest with a full-flavored and complex taste.',
             'With 21-25 two bite prawns in each pound, these sweet morsels are perfect for shish-kabobs.',
           ];
-          // delete the next line and add missing code here to test these values
-          expect(true).to.be.false;
+          cy.get('li.menu-fish p').each((fishDescription, index) => {
+            cy.wrap(fishDescription).contains(fishDescriptions[index]);
+          });
         });
 
-        // TODO: Fix test and remove "FAILING" flag
-        it('FAILING: should have the correct fish images', () => {
-          const fishImages = [];
-          // delete the next line and add missing code here to test these values
-          expect(true).to.be.false;
-        });
-
-        // TODO: Fix test and remove "FAILING" flag
-        it('FAILING: should have the correct description for the fish', () => {
-          // delete the next line and add missing code
-          expect(true).to.be.false;
+        it('should have the correct fish images', () => {
+          const fishImages = [
+            '/images/hali.jpg',
+            '/images/lobster.jpg',
+            '/images/scallops.jpg',
+            '/images/mahi.jpg',
+            '/images/crab.jpg',
+            '/images/salmon.jpg',
+            '/images/oysters.jpg',
+            '/images/mussels.jpg',
+            '/images/prawns.jpg',
+          ];
+          cy.get('li.menu-fish img').each((fishImage, index) => {
+            cy.wrap(fishImage).should('have.attr', 'src', fishImages[index])
+          });
         });
       });
     });
