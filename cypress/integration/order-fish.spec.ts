@@ -275,14 +275,58 @@ describe('Adding/removing fish', () => {
       });
     });
 
-    describe.skip('adding fish to order', () => {
-      it('can add fish by clicking add to order', () => {});
-      it('can add multiple fishes of multiple types', () => {});
-      it('can remove fishes after adding', () => {
-        // note: there is a bug in the app here!
-        // Feel free to try and fix it or .skip this test permanently :)
+    describe.only('adding fish to order', () => {
+      beforeEach(() => {
+        cy.get('button')
+          .contains('Load Sample Fishes')
+          .click();
       });
-      it('calculates total price corrects', () => {});
+
+      it('can add fish by clicking add to order', () => { 
+        cy.get('button').contains('Add To Order').first().click()
+        cy.get('ul.order').contains('1lbs Pacific Halibut')
+        cy.get('button').contains('Add To Order').first().click()
+        cy.get('ul.order li:nth-child(1)>span').contains('2')
+        cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut')
+      });
+
+      it('can add multiple fishes of multiple types', () => {
+        cy.get('button').contains('Add To Order').first().click()
+        cy.get('ul.order').contains('1lbs Pacific Halibut')
+        cy.get('button').contains('Add To Order').first().click()
+        cy.get('ul.order li:nth-child(1)>span').contains('2')
+        cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut')
+
+        cy.get('li.menu-fish').eq(1).find('button').contains('Add To Order').click()
+        cy.get('ul.order li:nth-child(2)').contains('1lbs Lobster')
+
+        cy.get('ul.order li:nth-child(1)>span').contains('2')
+        cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut')
+       });
+
+      it.only('can remove fishes after adding', () => {
+        // setup
+        cy.get('button').contains('Add To Order').first().click()
+        cy.get('button').contains('Add To Order').first().click()
+        cy.get('li.menu-fish').eq(1).find('button').contains('Add To Order').click()
+
+        // remove fish
+        cy.get('ul.order li:nth-child(1)').find('button').contains('×').invoke('show').click();
+
+        // Wait for CSS transition to complete. Better way to do this?
+        cy.wait(500)
+        cy.get('ul.order li:nth-child(1)>span').contains('1')
+        cy.get('ul.order li:nth-child(1)>span').contains('lbs Lobster')
+        cy.get('ul.order li').should('have.length', 1);
+
+        // remove other fish
+        cy.get('ul.order li').find('button').contains('×').invoke('show').click();
+
+        cy.wait(500)
+        cy.get('ul.order li').should('have.length', 0);
+
+      });
+      it('calculates total price corrects', () => { });
     });
   });
 });
