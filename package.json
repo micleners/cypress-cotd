@@ -10,7 +10,7 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "autoprefixer-stylus": "0.14.0",
+    "autoprefixer-stylus": "1.0.0",
     "firebase": "^7.6.0",
     "prop-types": "^15.6.0",
     "prettier": "^1.19.1",
