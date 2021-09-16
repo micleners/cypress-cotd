@@ -24,7 +24,8 @@
     "stylus": "0.55.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"npm run ui\" \"npm run api\"",
+    "ui": "react-scripts start",
     "api": "nodemon backend/server.js",
     "watch": "concurrently --names \"webpack, stylus\" --prefix name \"npm run start\" \"npm run styles:watch\"",
     "build": "react-scripts build",

@@ -3,12 +3,13 @@ describe('Adding/removing fish', () => {
   // switch comment between line above and line below to run tests on web vs locally. (Don't forget to `npm run start`)
   // const url = `${Cypress.env("webUrl")}`;
 
+  // beforeEach will before every test. Here we visit the homepage
+  beforeEach(() => {
+    cy.visit(url);
+    cy.get('button').click();
+  });
+
   describe('Navigate to COTD homepage and create store', () => {
-    // beforeEach will before every test. Here we visit the homepage
-    beforeEach(() => {
-      cy.visit(url);
-      cy.get('button').click();
-    });
 
     it('should have the correct headers', () => {
       cy.get('h2').should('contain', 'Order');
@@ -22,6 +23,7 @@ describe('Adding/removing fish', () => {
   });
 
   describe('Add a fish form', () => {
+
     it('should be able to add a fish on the main store page', () => {
       cy.get('form.fish-edit').as('fishForm');
       cy.get('@fishForm').should('exist');
@@ -305,7 +307,7 @@ describe('Adding/removing fish', () => {
       cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut')
     });
 
-    it.only('can remove fishes after adding', () => {
+    it('can remove fishes after adding', () => {
       // setup
       cy.get('button').contains('Add To Order').first().click()
       cy.get('button').contains('Add To Order').first().click()
