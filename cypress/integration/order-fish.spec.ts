@@ -275,7 +275,7 @@ describe('Adding/removing fish', () => {
       });
     });
 
-    describe.only('adding fish to order', () => {
+    describe('adding fish to order', () => {
       beforeEach(() => {
         cy.get('button')
           .contains('Load Sample Fishes')
