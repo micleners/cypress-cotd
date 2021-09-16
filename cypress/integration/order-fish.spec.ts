@@ -307,7 +307,7 @@ describe('Adding/removing fish', () => {
       cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut')
     });
 
-    it.only('can remove fishes after adding', () => {
+    it('can remove fishes after adding', () => {
       // setup
       cy.get('button').contains('Add To Order').first().click()
       cy.get('button').contains('Add To Order').first().click()
