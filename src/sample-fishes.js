@@ -1,5 +1,5 @@
 // This is just some sample data so you don't have to think of your own!
-const fishes = {
+module.exports = {
   fish1: {
     name: 'Pacific Halibut',
     image: '/images/hali.jpg',
@@ -80,5 +80,3 @@ const fishes = {
     status: 'available',
   },
 };
-
-export default fishes;
