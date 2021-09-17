@@ -5,25 +5,25 @@ describe('Adding/removing fish', () => {
 
   // beforeEach will before every test. Here we visit the homepage
   beforeEach(() => {
+    cy.intercept('http://localhost:3001/sample-fish').as('getSampleFish');
     cy.visit(url);
     cy.get('button').click();
+    cy.request('http://localhost:3001/reset');
   });
 
   describe('Navigate to COTD homepage and create store', () => {
-
     it('should have the correct headers', () => {
-      cy.get('h2').should('contain', 'Order');
-      cy.get('h2').should('contain', 'Inventory');
+      cy.get('h2').contains('Order');
+      cy.get('h2').contains('Inventory');
 
-      cy.get('h1').should('contain', 'Catch');
-      cy.get('h1').should('contain', 'of');
-      cy.get('h1').should('contain', 'the');
-      cy.get('h1').should('contain', 'day');
+      cy.get('h1').contains('Catch');
+      cy.get('h1').contains('of');
+      cy.get('h1').contains('the');
+      cy.get('h1').contains('day');
     });
   });
 
-  describe('Add a fish form', () => {
-
+  describe('Add a fish', () => {
     it('should be able to add a fish on the main store page', () => {
       cy.get('form.fish-edit').as('fishForm');
       cy.get('@fishForm').should('exist');
@@ -51,10 +51,7 @@ describe('Adding/removing fish', () => {
         .should('contain.value', '1050');
       cy.get('div.fish-edit textarea[name="desc"]')
         .first()
-        .should(
-          'contain.value',
-          "Not the best, but not the worst you'll ever have!"
-        );
+        .should('contain.value', "Not the best, but not the worst you'll ever have!");
       cy.get('div.fish-edit input[name="image"]')
         .first()
         .should('contain.value', '/images/salmon.jpg');
@@ -81,21 +78,108 @@ describe('Adding/removing fish', () => {
 
       cy.get('h3.fish-name')
         .first()
-        .should('contain', 'Southwest Trout');
+        .contains('Southwest Trout');
       cy.get('h3.fish-name')
         .first()
-        .should('contain', '$10.50');
+        .contains('$10.50');
       cy.get('li.menu-fish p')
         .first()
-        .should(
-          'contain',
-          "Not the best, but not the worst you'll ever have!"
-        );
-      cy.get('img[alt="Southwest Trout"]').should(
-        'have.attr',
-        'src',
-        '/images/salmon.jpg'
-      );
+        .should('contain', "Not the best, but not the worst you'll ever have!");
+      cy.get('img[alt="Southwest Trout"]').should('have.attr', 'src', '/images/salmon.jpg');
+    });
+  });
+
+  describe('Edit a fish', () => {
+    it('should be able to edit a fish on the main store page', () => {
+      cy.get('form.fish-edit').as('fishForm');
+      cy.get('@fishForm').should('exist');
+      cy.get('@fishForm')
+        .find('input[name="name"]')
+        .type('Southwest Trout');
+      cy.get('@fishForm')
+        .find('input[name="price"]')
+        .type('1050');
+      cy.get('@fishForm')
+        .find('textarea[name="desc"]')
+        .type("Not the best, but not the worst you'll ever have!");
+      cy.get('@fishForm')
+        .find('input[name="image"]')
+        .type('/images/salmon.jpg');
+      cy.get('button')
+        .contains('Add Fish!')
+        .click();
+
+      cy.get('h3.fish-name')
+        .first()
+        .contains('Southwest Trout');
+      cy.get('h3.fish-name')
+        .first()
+        .contains('$10.50');
+      cy.get('li.menu-fish p')
+        .first()
+        .contains("Not the best, but not the worst you'll ever have!");
+      cy.get('img[alt="Southwest Trout"]').should('have.attr', 'src', '/images/salmon.jpg');
+
+      cy.get('div.fish-edit').as('fishForm');
+      cy.get('@fishForm').should('exist');
+      cy.get('@fishForm')
+        .find('input[name="name"]')
+        .clear()
+        .type('Mahi');
+      cy.get('@fishForm')
+        .find('input[name="price"]')
+        .clear()
+        .type('990');
+      cy.get('@fishForm')
+        .find('textarea[name="desc"]')
+        .clear()
+        .type('A mighty good fish!');
+      cy.get('@fishForm')
+        .find('input[name="image"]')
+        .clear()
+        .type('/images/mahi.jpg');
+
+      cy.get('h3.fish-name')
+        .first()
+        .contains('Mahi');
+      cy.get('h3.fish-name')
+        .first()
+        .contains('$9.90');
+      cy.get('li.menu-fish p')
+        .first()
+        .should('contain', 'A mighty good fish!');
+      cy.get('img[alt="Mahi"]').should('have.attr', 'src', '/images/mahi.jpg');
+    });
+
+    it('can add fish and see fish on left hand menu', () => {
+      cy.get('form.fish-edit').as('fishForm');
+      cy.get('@fishForm').should('exist');
+      cy.get('@fishForm')
+        .find('input[name="name"]')
+        .type('Southwest Trout');
+      cy.get('@fishForm')
+        .find('input[name="price"]')
+        .type('1050');
+      cy.get('@fishForm')
+        .find('textarea[name="desc"]')
+        .type("Not the best, but not the worst you'll ever have!");
+      cy.get('@fishForm')
+        .find('input[name="image"]')
+        .type('/images/salmon.jpg');
+      cy.get('button')
+        .contains('Add Fish!')
+        .click();
+
+      cy.get('h3.fish-name')
+        .first()
+        .contains('Southwest Trout');
+      cy.get('h3.fish-name')
+        .first()
+        .contains('$10.50');
+      cy.get('li.menu-fish p')
+        .first()
+        .should('contain', "Not the best, but not the worst you'll ever have!");
+      cy.get('img[alt="Southwest Trout"]').should('have.attr', 'src', '/images/salmon.jpg');
     });
   });
 
@@ -125,24 +209,14 @@ describe('Adding/removing fish', () => {
           'Jumbo Prawns',
         ];
         cy.get('div.fish-edit input[name="name"]').each((fishName, index) => {
-          cy.wrap(fishName).should('have.value', fishNames[index])
+          cy.wrap(fishName).should('have.value', fishNames[index]);
         });
       });
 
       it('should have the correct fish prices', () => {
-        const fishPrices = [
-          '1724',
-          '3200',
-          '1684',
-          '1129',
-          '4234',
-          '1453',
-          '2543',
-          '425',
-          '2250',
-        ];
+        const fishPrices = ['1724', '3200', '1684', '1129', '4234', '1453', '2543', '425', '2250'];
         cy.get('div.fish-edit input[name="price"]').each((fishPrice, index) => {
-          cy.wrap(fishPrice).should('have.value', fishPrices[index])
+          cy.wrap(fishPrice).should('have.value', fishPrices[index]);
         });
       });
 
@@ -159,7 +233,9 @@ describe('Adding/removing fish', () => {
           'available',
         ];
         cy.get('div.fish-edit select[name="status"]').each((fish, index) => {
-          cy.wrap(fish).find("option:selected").contains(fishStatuses[index])
+          cy.wrap(fish)
+            .find('option:selected')
+            .contains(fishStatuses[index]);
         });
       });
 
@@ -176,7 +252,7 @@ describe('Adding/removing fish', () => {
           'With 21-25 two bite prawns in each pound, these sweet morsels are perfect for shish-kabobs.',
         ];
         cy.get('div.fish-edit textarea[name="desc"]').each((fish, index) => {
-          cy.wrap(fish).contains(fishDescriptions[index])
+          cy.wrap(fish).contains(fishDescriptions[index]);
         });
       });
 
@@ -193,7 +269,7 @@ describe('Adding/removing fish', () => {
           '/images/prawns.jpg',
         ];
         cy.get('div.fish-edit input[name="image"]').each((fishImage, index) => {
-          cy.wrap(fishImage).should('have.value', fishImages[index])
+          cy.wrap(fishImage).should('have.value', fishImages[index]);
         });
       });
     });
@@ -221,17 +297,7 @@ describe('Adding/removing fish', () => {
       });
 
       it('should have the correct fish prices', () => {
-        const fishPrices = [
-          '1724',
-          '3200',
-          '1684',
-          '1129',
-          '4234',
-          '1453',
-          '2543',
-          '425',
-          '2250',
-        ];
+        const fishPrices = ['1724', '3200', '1684', '1129', '4234', '1453', '2543', '425', '2250'];
         cy.get('h3.fish-name span').each((fish, index) => {
           expect(fish.text()).to.equal(
             (parseInt(fishPrices[index]) / 100).toLocaleString('en-US', {
@@ -272,7 +338,7 @@ describe('Adding/removing fish', () => {
           '/images/prawns.jpg',
         ];
         cy.get('li.menu-fish img').each((fishImage, index) => {
-          cy.wrap(fishImage).should('have.attr', 'src', fishImages[index])
+          cy.wrap(fishImage).should('have.attr', 'src', fishImages[index]);
         });
       });
     });
@@ -283,51 +349,85 @@ describe('Adding/removing fish', () => {
       cy.get('button')
         .contains('Load Sample Fishes')
         .click();
+      cy.wait('@getSampleFish')
     });
 
     it('can add fish by clicking add to order', () => {
-      cy.get('button').contains('Add To Order').first().click()
-      cy.get('ul.order').contains('1lbs Pacific Halibut')
-      cy.get('button').contains('Add To Order').first().click()
-      cy.get('ul.order li:nth-child(1)>span').contains('2')
-      cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut')
+      cy.get('button')
+        .contains('Add To Order')
+        .first()
+        .click();
+      cy.get('ul.order').contains('1lbs Pacific Halibut');
+      cy.get('button')
+        .contains('Add To Order')
+        .first()
+        .click();
+      cy.get('ul.order li:nth-child(1)>span').contains('2');
+      cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut');
     });
 
     it('can add multiple fishes of multiple types', () => {
-      cy.get('button').contains('Add To Order').first().click()
-      cy.get('ul.order').contains('1lbs Pacific Halibut')
-      cy.get('button').contains('Add To Order').first().click()
-      cy.get('ul.order li:nth-child(1)>span').contains('2')
-      cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut')
+      cy.get('button')
+        .contains('Add To Order')
+        .first()
+        .click();
+      cy.get('ul.order').contains('1lbs Pacific Halibut');
+      cy.get('button')
+        .contains('Add To Order')
+        .first()
+        .click();
+      cy.get('ul.order li:nth-child(1)>span').contains('2');
+      cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut');
 
-      cy.get('li.menu-fish').eq(1).find('button').contains('Add To Order').click()
-      cy.get('ul.order li:nth-child(2)').contains('1lbs Lobster')
+      cy.get('li.menu-fish')
+        .eq(1)
+        .find('button')
+        .contains('Add To Order')
+        .click();
+      cy.get('ul.order li:nth-child(2)').contains('1lbs Lobster');
 
-      cy.get('ul.order li:nth-child(1)>span').contains('2')
-      cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut')
+      cy.get('ul.order li:nth-child(1)>span').contains('2');
+      cy.get('ul.order li:nth-child(1)>span').contains('lbs Pacific Halibut');
     });
 
     it('can remove fishes after adding', () => {
       // setup
-      cy.get('button').contains('Add To Order').first().click()
-      cy.get('button').contains('Add To Order').first().click()
-      cy.get('li.menu-fish').eq(1).find('button').contains('Add To Order').click()
+      cy.get('button')
+        .contains('Add To Order')
+        .first()
+        .click();
+      cy.get('button')
+        .contains('Add To Order')
+        .first()
+        .click();
+      cy.get('li.menu-fish')
+        .eq(1)
+        .find('button')
+        .contains('Add To Order')
+        .click();
 
       // remove fish
-      cy.get('ul.order li:nth-child(1)').find('button').contains('×').invoke('show').click();
+      cy.get('ul.order li:nth-child(1)')
+        .find('button')
+        .contains('×')
+        .invoke('show')
+        .click();
 
       // Wait for CSS transition to complete. Better way to do this?
-      cy.wait(500)
-      cy.get('ul.order li:nth-child(1)>span').contains('1')
-      cy.get('ul.order li:nth-child(1)>span').contains('lbs Lobster')
+      cy.wait(500);
+      cy.get('ul.order li:nth-child(1)>span').contains('1');
+      cy.get('ul.order li:nth-child(1)>span').contains('lbs Lobster');
       cy.get('ul.order li').should('have.length', 1);
 
       // remove other fish
-      cy.get('ul.order li').find('button').contains('×').invoke('show').click();
+      cy.get('ul.order li')
+        .find('button')
+        .contains('×')
+        .invoke('show')
+        .click();
 
-      cy.wait(500)
+      cy.wait(500);
       cy.get('ul.order li').should('have.length', 0);
-
     });
   });
 });
