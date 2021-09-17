@@ -6,11 +6,13 @@
     "@bahmutov/add-typescript-to-cypress": "^2.1.2",
     "concurrently": "^4.1.0",
     "cypress": "^8.4.0",
+    "nodemon": "^2.0.12",
     "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
   },
   "dependencies": {
     "autoprefixer-stylus": "1.0.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase": "^7.6.0",
     "prettier": "^1.19.1",
