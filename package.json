@@ -6,6 +6,7 @@
     "@bahmutov/add-typescript-to-cypress": "^2.1.2",
     "concurrently": "^4.1.0",
     "cypress": "^8.4.0",
+    "nodemon": "^2.0.12",
     "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
   },
