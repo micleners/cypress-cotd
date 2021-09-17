@@ -6,7 +6,7 @@ import Inventory from './Inventory';
 import Fish from './Fish';
 
 const baseUrl = 'http://localhost:3001/';
-// let timeout = null;
+let timeout = null;
 
 class App extends React.Component {
   state = {
@@ -54,9 +54,28 @@ class App extends React.Component {
   };
 
   updateFish = (key, updatedFish) => {
-    const fishes = { ...this.state.fishes };
-    fishes[key] = updatedFish;
-    this.setState({ fishes });
+    const newFishes = this.state.fishes;
+    newFishes[key] = updatedFish;
+    this.setState({ fished: newFishes });
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fetch(`${baseUrl}${key}`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedFish),
+      }).then(() => {
+        fetch(baseUrl)
+          .then((res) => {
+            return res.json();
+          })
+          .then((res) => {
+            this.setState({ fishes: res });
+          });
+      });
+    }, 500);
   };
 
   deleteFish = (key) => {
